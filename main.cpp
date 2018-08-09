@@ -1,7 +1,7 @@
 /*
-	Nolan Slade  		001401079
-	Vyome Kishore		001406201
-	Kerala Brendon		001424625
+	Nolan Slade  		
+	Vyome Kishore		
+	Kerala Brendon		
 
 	CS 3GC3 - Final Project
 */
