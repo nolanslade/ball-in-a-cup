@@ -39,14 +39,14 @@
 #define SCREEN_HEIGHT 		1000.0
 
 /* Game Room */
-#define ROOM_DEPTH			2000.0
-#define ROOM_WIDTH			1500.0
-#define ROOM_HEIGHT			1500.0
+#define ROOM_DEPTH		2000.0
+#define ROOM_WIDTH		1500.0
+#define ROOM_HEIGHT		1500.0
 
 /* Table */
 #define TABLE_HEIGHT		500.0
-#define TABLE_DEPTH			1000.0
-#define TABLE_WIDTH			600.0
+#define TABLE_DEPTH		1000.0
+#define TABLE_WIDTH		600.0
 #define TABLE_THICKNESS		50.0
 #define LEG_THICKNESS		25.0
 
@@ -58,34 +58,34 @@
 #define PLAYER_TABLE_DIST	400.0 			// Distance from table
 
 /* Game Specific */
-#define NUM_CUPS 			6
-#define BALL_RADIUS			20.0
+#define NUM_CUPS 		6
+#define BALL_RADIUS		20.0
 #define BALL_SLICES 		100
-#define CUP_RADIUS			40.0
+#define CUP_RADIUS		40.0
 #define CUP_HEIGHT      	70.0 
-#define GRAVITY				9.8 			// Used for projectile motion for ball trajectory
-#define PI 					3.14159265
+#define GRAVITY			9.8 			// Used for projectile motion for ball trajectory
+#define PI 			3.14159265
 #define RETICULE_HEIGHT		150 			// How high above the table the target will show up
 #define COMPONENT_INC		5.0 			// How much a player's trajectory vectory will change on keystrokes
 #define THROW_HEIGHT		100.0 			// Height that the ball is thrown from (distance above table)
-#define POWER_CONST			15.0 			// Multiplier used for ball speed in conjunction with shot power
+#define POWER_CONST		15.0 			// Multiplier used for ball speed in conjunction with shot power
 #define WINDOW_SIZE_WIDTH 	1000
 #define WINDOW_SIZE_HEIGHT 	1000
 
 /* Gameplay Globals */
-int mouseX = 0, mouseY = 0; //ADDED FOR RAY PICKING
-int screen=0; //0=Menu 1=Game 2=Controls 3,4... depending on what other menus we need like controls,help etc.
-bool paused=false;
-char currentPlayer = 'f';													// 'f' for first player, 's' for second
-int score[] = {6, 6};														// Number of games won, playerOne - playerTwo
-int firstPlayerPower = 5;													// 1 - 10 for player 1's shot power
-int secondPlayerPower = 5;													// 1 - 10 for player 2's shot power
-float firstPlayerShotVec[] = {0, 0, 0};										// Where playerOne is aiming their shot (x,y,z)
-float secondPlayerShotVec[] = {0, 0, 0};									// where playerTwo is aiming their shot
-bool playerOneShooting = false;												// Whether or not player 1 is shooting their ball
-bool playerTwoShooting = false;												// Whether or not player 2 is shooting their ball
-float shootingAngle = -75;													// Ball throwing rotation angle
-float endPosition[] = {-1000,1000,-1000};									// Impact point
+int mouseX = 0, mouseY = 0; 				// Added for ray casting
+int screen = 0; 					// 0=Menu 1=Game 2=Controls 3, 4... depending on what other menus we need like controls,help etc.
+bool paused = false;
+char currentPlayer = 'f';				// 'f' for first player, 's' for second
+int score [] = {6, 6};					// Number of games won, playerOne - playerTwo
+int firstPlayerPower = 5;				// 1 - 10 for player 1's shot power
+int secondPlayerPower = 5;				// 1 - 10 for player 2's shot power
+float firstPlayerShotVec [] = {0, 0, 0};		// Where playerOne is aiming their shot (x,y,z)
+float secondPlayerShotVec [] = {0, 0, 0};		// where playerTwo is aiming their shot
+bool playerOneShooting = false;				// Whether or not player 1 is shooting their ball
+bool playerTwoShooting = false;				// Whether or not player 2 is shooting their ball
+float shootingAngle = -75;				// Ball throwing rotation angle
+float endPosition [] = {-1000, 1000, -1000};		// Impact point
 
 // Player scores
 int redScore = 0;
@@ -110,44 +110,44 @@ float playerTwoCupsZ[] = {TABLE_DEPTH / 2 - (2*CUP_RADIUS), TABLE_DEPTH / 2 - (2
 float playerScale = 1.0;
 
 // Rotation of player members to aniamte them
-int rotations=0;
-int rotateAmt=0;
+int rotations = 0;
+int rotateAmt = 0;
 
 // Switching players when a turn is over
-bool switchingPlayer=false;
+bool switchingPlayer = false;
 
 // Sway effect
-bool swayDir=false;
-float swayRed,swayGreen;
+bool swayDir = false;
+float swayRed, swayGreen;
 
 // Fog effect
-bool fogEnabled=false;
-float fogColor[4]={1,0,0,1};
+bool fogEnabled = false;
+float fogColor [4] = {1, 0, 0, 1};
 
 // Menu interaction
-bool onPlay=false;
-bool onQuit=false;
+bool onPlay = false;
+bool onQuit = false;
 
 /* Camera Globals */
-float camPos[] = {0.0f, ROOM_HEIGHT / 2, (-1 * ROOM_DEPTH / 2) + ROOM_DEPTH / 7};
-float camUp[] = { 0.0f, 1, 0};
-float camTarget[] = { 0.0f, TABLE_HEIGHT, 0.0f };
-float camSpeed = 0.4f;
-float playerOneCam[] = {0.0f, ROOM_HEIGHT / 2, (-1 * ROOM_DEPTH / 2) + ROOM_DEPTH / 7};
-float playerTwoCam[] = {0.0f, ROOM_HEIGHT / 2, (ROOM_DEPTH / 2) - ROOM_DEPTH / 7};
+float camPos [] 	= {0.0f, ROOM_HEIGHT / 2, (-1 * ROOM_DEPTH / 2) + ROOM_DEPTH / 7};
+float camUp [] 		= { 0.0f, 1, 0};
+float camTarget [] 	= { 0.0f, TABLE_HEIGHT, 0.0f };
+float camSpeed 		= 0.4f;
+float playerOneCam [] 	= {0.0f, ROOM_HEIGHT / 2, (-1 * ROOM_DEPTH / 2) + ROOM_DEPTH / 7};
+float playerTwoCam [] 	= {0.0f, ROOM_HEIGHT / 2, (ROOM_DEPTH / 2) - ROOM_DEPTH / 7};
 
 /* Lighting Globals */
-float light_pos[] = {0, ROOM_HEIGHT-50 , 0, 1};
-float amb0[4]  = {1, 1, 1, 1}; 
-float diff0[4] = {1, 1, 1, 1};
-float spec0[4] = {1, 1, 1, 1}; 
+float light_pos[] 	= {0, ROOM_HEIGHT - 50 , 0, 1};
+float amb0 [4]  	= {1, 1, 1, 1}; 
+float diff0 [4] 	= {1, 1, 1, 1};
+float spec0 [4] 	= {1, 1, 1, 1}; 
 
 /* Material Globals */
 struct Material {
 	int id;
-	float ambient[4];
-	float diffuse[4];
-	float specular[4];
+	float ambient [4];
+	float diffuse [4];
+	float specular [4];
 	float shine;
 } obsidian, blackrubber, brass, pearl, greenrubber, redrubber, redplastic, whiteplastic, wood;
 
@@ -174,13 +174,13 @@ float table_verts[8][3] = {
 	// List is structured the same as cube in week 6 slides, slide 15
 	// Positive Depth (z) goes into the screen, x goes left to right, y goes bottom to top
 	{ -1 * (TABLE_WIDTH / 2), TABLE_HEIGHT - TABLE_THICKNESS, -1 * (TABLE_DEPTH / 2) },	// 0
-	{ -1 * (TABLE_WIDTH / 2), TABLE_HEIGHT, -1 * (TABLE_DEPTH / 2) }, 					// 1
-	{ TABLE_WIDTH / 2, TABLE_HEIGHT, -1 * (TABLE_DEPTH / 2) }, 							// 2
+	{ -1 * (TABLE_WIDTH / 2), TABLE_HEIGHT, -1 * (TABLE_DEPTH / 2) }, 			// 1
+	{ TABLE_WIDTH / 2, TABLE_HEIGHT, -1 * (TABLE_DEPTH / 2) }, 				// 2
 	{ TABLE_WIDTH / 2, TABLE_HEIGHT - TABLE_THICKNESS, -1 * (TABLE_DEPTH / 2) }, 		// 3
 	{ -1 * (TABLE_WIDTH / 2), TABLE_HEIGHT - TABLE_THICKNESS, TABLE_DEPTH / 2 }, 		// 4 
-	{ -1 * (TABLE_WIDTH / 2), TABLE_HEIGHT, TABLE_DEPTH / 2 },							// 5
-	{ TABLE_WIDTH / 2, TABLE_HEIGHT, TABLE_DEPTH / 2 },									// 6
-	{ TABLE_WIDTH / 2, TABLE_HEIGHT - TABLE_THICKNESS, TABLE_DEPTH / 2 }				// 7
+	{ -1 * (TABLE_WIDTH / 2), TABLE_HEIGHT, TABLE_DEPTH / 2 },				// 5
+	{ TABLE_WIDTH / 2, TABLE_HEIGHT, TABLE_DEPTH / 2 },					// 6
+	{ TABLE_WIDTH / 2, TABLE_HEIGHT - TABLE_THICKNESS, TABLE_DEPTH / 2 }			// 7
 };
 float table_faces[6][4] = {
 	{1, 2, 3, 0},		// Front Face
@@ -272,33 +272,33 @@ float leg_faces[24][4] = {
 /* Walls, floor and ceiling to make up the room */
 float room_verts[8][3] = {
 	// Vertices organized as in table_verts (cube from slides), relative to room center and size
-	{ -1 * (ROOM_WIDTH / 2), 0.0f, -1 * (ROOM_DEPTH / 2) }, 			// 0
+	{ -1 * (ROOM_WIDTH / 2), 0.0f, -1 * (ROOM_DEPTH / 2) }, 		// 0
 	{ -1 * (ROOM_WIDTH / 2), ROOM_HEIGHT, -1 * (ROOM_DEPTH / 2) }, 		// 1
-	{ ROOM_WIDTH / 2, ROOM_HEIGHT, -1 * (ROOM_DEPTH / 2) }, 			// 2
-	{ ROOM_WIDTH / 2, 0.0f, -1 * (ROOM_DEPTH / 2) }, 					// 3
-	{ -1 * (ROOM_WIDTH / 2), 0.0f, ROOM_DEPTH / 2 }, 					// 4 
-	{ -1 * (ROOM_WIDTH / 2), ROOM_HEIGHT, ROOM_DEPTH / 2 },				// 5
-	{ ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_DEPTH / 2 },					// 6
-	{ ROOM_WIDTH / 2, 0.0f, ROOM_DEPTH / 2 }							// 7
+	{ ROOM_WIDTH / 2, ROOM_HEIGHT, -1 * (ROOM_DEPTH / 2) }, 		// 2
+	{ ROOM_WIDTH / 2, 0.0f, -1 * (ROOM_DEPTH / 2) }, 			// 3
+	{ -1 * (ROOM_WIDTH / 2), 0.0f, ROOM_DEPTH / 2 }, 			// 4 
+	{ -1 * (ROOM_WIDTH / 2), ROOM_HEIGHT, ROOM_DEPTH / 2 },			// 5
+	{ ROOM_WIDTH / 2, ROOM_HEIGHT, ROOM_DEPTH / 2 },			// 6
+	{ ROOM_WIDTH / 2, 0.0f, ROOM_DEPTH / 2 }				// 7
 };
 float room_faces[6][4] = {
 	// Room faces are drawn so that they are visible from the inside of the room
-	{ 1, 2, 3, 0 },		// Front Face
-	{ 6, 5, 4, 7 },		// Back Face
-	{ 2, 6, 7, 3 },		// Right Face
-	{ 5, 1, 0, 4 },		// Left Face
-	{ 6, 2, 1, 5 },		// Top Face
-	{ 3, 7, 4, 0 }		// Bottom Face
+	{1, 2, 3, 0},		// Front Face
+	{6, 5, 4, 7},		// Back Face
+	{2, 6, 7, 3},		// Right Face
+	{5, 1, 0, 4},		// Left Face
+	{6, 2, 1, 5},		// Top Face
+	{3, 7, 4, 0}		// Bottom Face
 };
 
 // Face normals for a rectangular prism shape
 float rect_prism_face_normals[6][3] = {
-	{0,0,1},
-	{0,0,-1},
-	{-1,0,0},
-	{1,0,0},
-	{0,-1,0},
-	{0,1,0}
+	{0, 0, 1},
+	{0, 0, -1},
+	{-1, 0, 0},
+	{1, 0, 0},
+	{0, -1, 0},
+	{0, 1, 0}
 };
 
 /* Ball Position for Trajectory and Ray Picking */
@@ -565,10 +565,10 @@ void drawRectPrism(float objectVertices[8][3], float objectFaces[6][4], bool ins
 
 		// Index values for all vertex normal calculations; three indices correspond to the 3 faces that touch the vertex e.g. [0]{0,1,2} would signify 
 		// that the firstVertex connects to faces with normals face_normals[0,1, and 2]
-		int norm_inds[4][3] = { {0, 0, 0}, 		// First vertex attaches these three faces
-								{0, 0, 0}, 		// Second vertex attaches these three faces
-								{0, 0, 0}, 		// Third vertex attaches these three faces
-								{0, 0, 0} };	// Fourth vertex attaches these three faces
+		int norm_inds[4][3] = { {0, 0, 0}, 	// First vertex attaches these three faces
+					{0, 0, 0}, 	// Second vertex attaches these three faces
+					{0, 0, 0}, 	// Third vertex attaches these three faces
+					{0, 0, 0} };	// Fourth vertex attaches these three faces
 																							
 		float magnitude = 0; 	// Used to normalize the vertex vector normals
 
@@ -1130,15 +1130,15 @@ void checkShot(){
 
 /* Draws a given player's trajectory */
 void drawTrajectory (char player, float trajectoryVector[3], bool shooting) {
-    double V;																	// Velocity
-    double theta = trajectoryVector[1];											// Angle of projection (Y-axis)
-    double Vy, Vz;																// Velocity components
+    double V;											// Velocity
+    double theta = trajectoryVector[1];								// Angle of projection (Y-axis)
+    double Vy, Vz;										// Velocity components
     double startPosition[3] = {0, TABLE_HEIGHT + THROW_HEIGHT, 0};				// Initial position of the ball
-    double h;																	// Max height reached by the ball
-    double t;																	// Time to reach max height
-    double t1;																	// Freefall time after reaching max height
-    double totalTime;															// Time from launch to land
-    double displacement[3] = {0, 0, 0};											// Displacement amounts along each axis
+    double h;											// Max height reached by the ball
+    double t;											// Time to reach max height
+    double t1;											// Freefall time after reaching max height
+    double totalTime;										// Time from launch to land
+    double displacement[3] = {0, 0, 0};								// Displacement amounts along each axis
 
     // Drawing player 1's trajectory
     if (player == 'f') {
